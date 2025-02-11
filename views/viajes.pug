@@ -1,0 +1,46 @@
+extends ./layout/index
+
+block contenido
+    main.container.mt-5
+        h1.text-center.mb-4 Próximos Viajes
+        .row
+            each viaje in viajes
+                .col-md-4.mb-4
+                    .card
+                        img(src=`/img/destinos_${viaje.imagen}_ln.jpg`, alt=viaje.titulo, class="card-img-top")
+                        .card-body
+                            h2.card-title= viaje.titulo
+                            p
+                                svg.icon.icon-tabler.icon-tabler-calendar-time(xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewbox='0 0 24 24' stroke-width='1.5'
+                                    stroke='#fd0061' fill='none' stroke-linecap='round' stroke-linejoin='round')
+                                    path(stroke='none' d='M0 0h24v24H0z' fill='none')
+                                    path(d='M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4')
+                                    path(d='M18 18m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0')
+                                    path(d='M15 3v4')
+                                    path(d='M7 3v4')
+                                    path(d='M3 11h16')
+                                    path(d='M18 16.496v1.504l1 1')
+                                |   #{viaje.fecha_ida} - #{viaje.fecha_vuelta}
+
+                            p
+                                svg.icon.icon-tabler.icon-tabler-coin-euro(xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewbox='0 0 24 24' stroke-width='1.5'
+                                    stroke='#fd0061' fill='none' stroke-linecap='round' stroke-linejoin='round')
+                                    path(stroke='none' d='M0 0h24v24H0z' fill='none')
+                                    path(d='M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0')
+                                    path(d='M14.401 8c-.669 -.628 -1.5 -1 -2.401 -1c-2.21 0 -4 2.239 -4 5s1.79 5 4 5c.9 0 1.731 -.372 2.4 -1')
+                                    path(d='M7 10.5h4')
+                                    path(d='M7 13.5h4')
+                                |   #{viaje.precio} Euros
+
+                            p
+                                svg.icon.icon-tabler.icon-tabler-users(xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewbox='0 0 24 24' stroke-width='1.5'
+                                    stroke='#fd0061' fill='none' stroke-linecap='round' stroke-linejoin='round')
+                                    path(stroke='none' d='M0 0h24v24H0z' fill='none')
+                                    path(d='M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0')
+                                    path(d='M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2')
+                                    path(d='M16 3.13a4 4 0 0 1 0 7.75')
+                                    path(d='M21 21v-2a4 4 0 0 0 -3 -3.85')
+                                |   #{viaje.disponibles} Disponibles
+
+                            p=viaje.descripcion.substring(0,100)+'...'
+                            a.btn.btn-primary(href=`/viajes/${viaje.slug}`) Ver más
