@@ -1,6 +1,6 @@
-import {Viaje} from "../models/Viaje.js";
+import {Viaje} from "../models/viaje.js";
 import moment from 'moment';
-import {Testimonial} from "../models/Testimoniales.js";
+import {Testimonial} from "../models/testimoniales.js";
 
 
 const paginaInicio = async (req, res) => {
