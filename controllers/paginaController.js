@@ -7,15 +7,15 @@ const paginaInicio = async (req, res) => {
 
    const promiseDB=[];
 
-    promiseDB.push(Viaje.findAll({limit: 3}));
+   promiseDB.push(Viaje.findAll({limit: 3}));
 
-    promiseDB.push(Testimonial.findAll({
+   promiseDB.push(Testimonial.findAll({
         limit: 3,
         order: [["Id", "DESC"]],
-    }));
+   }));
 
-    //Consultar 3 viajes del modelo de Viaje
-    try{
+   //Consultar 3 viajes del modelo de Viaje
+   try{
         const resultado = await Promise.all(promiseDB);
 
 

@@ -7,12 +7,14 @@ dotenv.config();
 
 const app = express();
 
-const port = process.env.PORT || 4000;
 
 //Conectar a la BBDD
 db.authenticate()
     .then(()=> console.log('Conectado a la base de datos'))
     .catch(err=>console.log(err));
+
+
+const port = process.env.PORT || 4000;
 
 app.listen(port, () => console.log(`Escuchando en el puerto ${port}`));
 
@@ -33,3 +35,5 @@ app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}));
 
 app.use("/", router);
+
+//"dev": "nodemon index.js"
