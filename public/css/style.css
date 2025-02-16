@@ -20,6 +20,10 @@ h3 {
     font-size: 3rem;
 }
 
+.dropdown-menu .dropdown-item.cuenta-links{
+    color: black;
+}
+
 .btn-success {
     background-color: #DC135F;
     border-color: #DC135F;
