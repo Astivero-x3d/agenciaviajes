@@ -10,5 +10,9 @@ header
                         a.nav-link(href="/nosotros") Nosotros
                         a.nav-link(href="/viajes") Viajes
                         a.nav-link(href="/testimonios") Testimonios
-                        a.nav-link(href="") Registro de sesion
-                        a.nav-link(href="") Inicio de sesion
+                        .nav-item.dropdown
+                            a#cuentaDropdown.nav-link.dropdown-toggle(href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false")
+                                | Cuenta de usuario
+                            .dropdown-menu(aria-labelledby="cuentaDropdown")
+                                a.dropdown-item(href="") Registro de sesión
+                                a.dropdown-item(href="") Inicio de sesión
