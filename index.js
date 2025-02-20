@@ -2,6 +2,7 @@ import express, {json} from 'express';
 import router from './routers/index.js';
 import db from './config/db.js';
 import  dotenv from 'dotenv';
+import session from 'express-session';
 dotenv.config();
 
 
@@ -33,6 +34,19 @@ app.use(express.static('public'));
 
 //Agregar body parser para los formularios de entrada
 app.use(express.urlencoded({extended: true}));
+
+//InicioDeSesion
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+}));
+
+app.use((req, res, next) => {
+    res.locals.usuario = req.session.usuario || null;
+    next();
+});
+
 
 app.use("/", router);
 

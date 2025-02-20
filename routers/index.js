@@ -1,5 +1,17 @@
 import express, {json} from 'express';
-import { paginaInicio, paginaNosotros , paginaViajes , paginaTestimonios , paginaDetalleViajes , guardarTestimonios} from "../controllers/paginaController.js";
+import {
+    paginaInicio,
+    paginaNosotros,
+    paginaViajes,
+    paginaTestimonios,
+    paginaDetalleViajes,
+    guardarTestimonios,
+    crearCuentaUsuario,
+    paginaCrearUsuario,
+    paginaInicioSesion,
+    IniciarSesion,
+    CerrarSesion
+} from "../controllers/paginaController.js";
 
 const router = express.Router();
 
@@ -8,6 +20,8 @@ router.get("/nosotros", paginaNosotros);
 router.get("/viajes", paginaViajes);
 router.get("/testimonios", paginaTestimonios);
 router.get("/viajes/:slug", paginaDetalleViajes);
+router.get("/CrearCuentaUsuario", paginaCrearUsuario);
+router.get("/iniciosesion", paginaInicioSesion)
 
 router.get("/viajes/:slug", async (req, res) => {
     try {
@@ -27,6 +41,14 @@ router.get("/viajes/:slug", async (req, res) => {
     }
 });
 
+
 router.post("/testimonios", guardarTestimonios);
+
+router.post("/CrearCuentaUsuario", crearCuentaUsuario);
+
+router.post("/iniciosesion", IniciarSesion);
+router.get("/cerrarsesion", CerrarSesion);
+
+
 
 export default router;

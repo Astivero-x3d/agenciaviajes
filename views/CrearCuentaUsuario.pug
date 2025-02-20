@@ -1,0 +1,28 @@
+extends ./layout/index
+
+block contenido
+    main.container.mt-5
+        h1.text-center.mt-5 #{titulo}
+
+        .row
+            h2.d-block.w-100.text-center Agrega un Usuario
+
+    .imagenfondousurios
+        h1.text-white Registrarse
+
+        .row.justify-content-center.col
+            .col-md-8
+                form(method="POST" action="/crearcuentausuario")
+                    .mb-3
+                        label(for="nombre") Nombre
+                        input#nombre.form-control(type="text" name="nombre" required)
+
+                    .mb-3
+                        label(for="email") Correo electrónico
+                        input#email.form-control(type="email" name="email" required)
+
+                    .mb-3
+                        label(for="contrasena") Contraseña
+                        input#contrasena.form-control(type="text" name="contrasena" required)
+
+                    button.btn.btn-primary(type="submit") Crear cuenta

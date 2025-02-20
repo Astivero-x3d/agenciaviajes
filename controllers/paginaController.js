@@ -1,7 +1,7 @@
 import {Viaje} from "../models/viaje.js";
 import moment from 'moment';
 import {Testimonial} from "../models/testimoniales.js";
-
+import {CuentaUsuario} from "../models/cuentausuario.js";
 
 const paginaInicio = async (req, res) => {
 
@@ -78,121 +78,6 @@ const paginaDetalleViajes = async (req, res) => {
         console.log(err);
     }
 };
-/*
-//Muestra una página por su Detalle
-const paginaComprar = async (req, res) => {
-    // req.params te va a dar los :slug que ponemos al pasarlo del router
-    const {slug} = req.params;
-    try{
-        //Me traigo una sola columna y lo hago con un where donde coincida el slug
-        const resultado = await Viaje.findOne({where: {slug: slug}});
-        res.render('comprar', {
-            pagina: 'Comprar un Viaje',
-            resultado: resultado,
-            moment: moment,
-        })
-    }catch (error){
-        console.log(error);
-    }
-
-}
-
-const guardarCompra =  async (req, res) => {
-
-    const {nombre, apellidos, correo, telefono, slug} = req.body;
-
-    const errores = [];
-
-    if (nombre.trim() === '') {
-        errores.push({mensaje: 'El nombre está vacío'});
-    }
-    if (correo.trim() === '') {
-        errores.push({mensaje: 'El correo está vacío'});
-    }
-    if (telefono.trim() === '') {
-        errores.push({mensaje: 'El teléfono está vacío'});
-    }
-    if (apellidos.trim() === '') {
-        errores.push({mensaje: 'Los apellidos están vacío'});
-    }
-
-
-
-
-    const resultado2 = await Viaje.findOne({where: {slug: slug}});
-
-
-
-
-
-
-    if (errores.length > 0) { //Debemos volver a la vista y mostrar los errores
-
-
-        res.render('comprar', {
-            pagina: 'Comprar un viaje',
-            errores: errores,
-            nombre: nombre,
-            correo: correo,
-            apellidos: apellidos,
-            telefono: telefono,
-            resultado: resultado2,
-        })
-    } else {//Almacenar el mensaje en la BBDD
-        // Crear un objeto de transporte de Nodemailer
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',  // Usando Gmail como servicio de correo
-            auth: {
-                user: 'carlosronce@gmail.com', // Reemplaza con tu correo de Gmail
-                pass: 'bbsk jush eqad yptu'         // Reemplaza con tu contraseña o una contraseña de aplicación
-            }
-        });
-        try {
-            // Crear cliente en la base de datos
-            await Cliente.create({
-                nombre: nombre,
-                apellidos: apellidos,
-                correoelectronico: correo,
-                telefono: telefono,
-            });
-
-            // Configurar el mensaje de correo
-            const mailOptions = {
-                from: `carlosronce@gmail.com`,      // Remitente
-                to: 'croncero@yahoo.es',         // Destinatario
-                subject: `Compra realizada por ` + nombre,  // Asunto
-                text:
-                    'Nombre: ' + nombre + '\n' +
-                    'Apellidos: ' + apellidos + '\n' +
-                    'Correo: ' + correo + '\n' +
-                    'Teléfono: ' + telefono + '\n' +
-                    'Viaje: ' + resultado2.titulo + '\n' +
-                    'Precio: ' + resultado2.precio + ' euros\n' +
-                    'Fecha de ida: ' + resultado2.fecha_ida + '\n' +
-                    'Fecha de vuelta: ' + resultado2.fecha_vuelta + '\n' +
-                    'Disponibles: ' + resultado2.disponibles + '\n' +
-                    'Descripción: ' + resultado2.descripcion  // Contenido del correo
-            };
-
-
-            await transporter.sendMail(mailOptions);
-            //res.redirect('/comprar'); //Guardo en la base de datos y lo envío a la misma vista
-            res.render('enviarmail.pug', {
-                pagina: 'Comprar un viaje',
-                correcto: 'si',
-                nombre: nombre,
-                correo: correo,
-                apellidos: apellidos,
-                telefono: telefono,
-                resultado: resultado2,
-            })
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-};
-*/
 
 const guardarTestimonios = async (req, res) => {
     console.log(req.body);
@@ -228,12 +113,115 @@ const guardarTestimonios = async (req, res) => {
     } else{
         try{
             await Testimonial.create({nombre: nombre, correoelectronico: correo,mensaje: mensaje,});
-            res.redirect('/testimonios'); //Guardo en la base de datos y lo envío a la misma vista
+            res.redirect('/testimonios');
         }catch(error){
             console.log(error);
         }
     }
 };
+
+const paginaCrearUsuario = async(req, res) => {
+    const crearelusuario = await CuentaUsuario.findAll({
+        limit: 6,
+        order: [["Id", "DESC"]],
+    });
+    res.render('CrearCuentaUsuario', {
+        pagina:'CrearCuentaUsuario',
+        CrearCuentaUsuario: crearelusuario,
+    });
+}
+
+const crearCuentaUsuario = async (req, res) => {
+    console.log(req.body);
+
+    const {nombre, email, contrasena}=req.body;
+
+    const errores = [];
+
+    if(nombre.trim()===''){
+        errores.push({mensaje: 'El nombre esta vacio'});
+    }
+
+    if(email.trim()===''){
+        errores.push({mensaje: 'El email vacio'});
+    }
+
+    if(contrasena.trim()===''){
+        errores.push({mensaje: 'El contrasena esta vacio'});
+    }
+
+    if(errores.length>0){
+        const crearcuentausuario = await CuentaUsuario.findAll({
+            limit: 6,
+            order: [["Id", "DESC"]],
+        });
+        res.render('crearcuentausuario', {
+            titulo: 'Crearcuenta',
+            errores: errores,
+            nombre: nombre,
+            email: email,
+            contrasena: contrasena,
+            crearcuentausuario: crearcuentausuario
+        })
+    } else{
+        try{
+            await CuentaUsuario.create({nombre: nombre, email: email, contrasena: contrasena});
+            res.redirect('/CrearCuentaUsuario');
+        } catch(error){
+            console.log(error);
+        }
+    }
+};
+
+const paginaInicioSesion = async (req, res) => {
+    const iniciarlacuentasesion = await CuentaUsuario.findAll({
+        limit: 6,
+        order: [["Id", "DESC"]],
+    });
+    res.render('iniciosesion', {
+        pagina:'iniciosesion',
+        iniciosesion: iniciarlacuentasesion,
+    });
+}
+
+const IniciarSesion = async (req, res) => {
+    const {email, contrasena} = req.body;
+
+    if (!email || !contrasena) {
+        return res.render('iniciosesion', {
+            titulo: 'Inicio de Sesión',
+            error: 'Todos los campos son obligatorios',
+        });
+    }
+
+    try{
+        const usuario = await CuentaUsuario.findOne({where: {email}});
+
+        if (!usuario || usuario.contrasena !== contrasena) {
+            return res.render('iniciosesion', {
+                titulo: 'Inicio de Sesión',
+                error: 'Correo o contraseña incorrectos',
+            });
+        }
+
+        req.session.usuario = usuario.nombre;
+
+        res.redirect('/');
+    }  catch (error) {
+        console.log(error);
+        res.render('iniciosesion', {
+            titulo: 'Inicio de Sesión',
+            error: 'Hubo un error, intenta nuevamente',
+        });
+    }
+}
+
+const CerrarSesion = (req, res) => {
+    req.session.destroy(() => {
+        res.redirect('/');
+    });
+};
+
 
 
 export {
@@ -243,6 +231,9 @@ export {
     paginaNosotros,
     paginaDetalleViajes,
     guardarTestimonios,
-    /*guardarCompra,
-    paginaComprar,*/
-}
+    paginaCrearUsuario,
+    crearCuentaUsuario,
+    paginaInicioSesion,
+    IniciarSesion,
+    CerrarSesion
+};

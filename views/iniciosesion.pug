@@ -1,0 +1,15 @@
+extends ./layout/index
+
+block contenido
+    main.container.mt-5
+        h1.text-center.mt-5 #{titulo}
+        if error
+            .alert.alert-danger.text-center= error
+        form(method="POST" action="/iniciosesion")
+            .mb-3
+                label.form-label(for="email") Correo Electrónico
+                input#email.form-control(type="email" name="email" required)
+            .mb-3
+                label.form-label(for="contrasena") Contraseña
+                input#contrasena.form-control(type="password" name="contrasena" required)
+            button.btn.btn-primary(type="submit") Iniciar Sesión

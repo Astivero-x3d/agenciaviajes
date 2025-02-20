@@ -20,8 +20,12 @@ h3 {
     font-size: 3rem;
 }
 
+.dropdown-link {
+    color: #000000;
+}
+
 .dropdown-menu .dropdown-item.cuenta-links{
-    color: black;
+    color: #000000;
 }
 
 .btn-success {
@@ -35,6 +39,19 @@ h3 {
     background-color: rgb(184, 5, 73);
     border-color: rgb(192, 7, 78);
 }
+
+.imagenfondousurios {
+    background: url(../img//Users_Trips.jpeg);
+    min-height: 600px;
+    height: 100vh;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
 .slider {
     background: url(../img//superior.jpg);
     min-height: 600px;
